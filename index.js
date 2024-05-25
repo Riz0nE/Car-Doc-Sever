@@ -10,7 +10,11 @@ const port = process.env.PORT || 5000;
 // middleware
 
 app.use(cors({
-    origin: ['http://localhost:5173'],
+    origin: [
+        'http://localhost:5173'
+        // 'https://car-doc-a0be3.web.app',
+        // 'https://car-doc-a0be3.firebaseapp.com'
+    ],
     credentials: true
 }));
 app.use(express.json());
@@ -42,13 +46,13 @@ const verifyToken = async (req, res, next) => {
     const token = req.cookies?.token;
     console.log('value of token in mddleware', token)
     if (!token) {
-        return res.status(401).send({ message: 'not authorazied' })
+        return res.status(401).send({ message: 'not token authorazied' })
     }
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
         // error
         if (err) {
             console.log(err)
-            return res.status(401).send({ message: 'not authorazied' })
+            return res.status(401).send({ message: 'not error authorazied' })
         }
         // if token is valid then it would decoded
         console.log('value in the token', decoded)
